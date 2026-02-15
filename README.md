@@ -3,6 +3,7 @@
 [![Automaze](https://img.shields.io/badge/By-automaze.io-4b3baf)](https://automaze.io)
 &nbsp;
 [![Claude Code](https://img.shields.io/badge/+-Claude%20Code-d97757)](https://github.com/automazeio/ccpm/blob/main/README.md)
+[![OpenCode](https://img.shields.io/badge/+-OpenCode-4b3baf)](https://github.com/automazeio/ccpm/blob/main/README.md)
 [![GitHub Issues](https://img.shields.io/badge/+-GitHub%20Issues-1f2328)](https://github.com/automazeio/ccpm)
 &nbsp;
 [![Mentioned in Awesome Claude Code](https://awesome.re/mentioned-badge.svg)](https://github.com/hesreallyhim/awesome-claude-code?tab=readme-ov-file#general-)
@@ -13,7 +14,9 @@
 &nbsp;
 [![Star this repo](https://img.shields.io/github/stars/automazeio/ccpm.svg?style=social&label=Star%20this%20repo&maxAge=60)](https://github.com/automazeio/ccpm)
 
-### Claude Code workflow to ship ~~faster~~ _better_ using spec-driven development, GitHub issues, Git worktrees, and multiple AI agents running in parallel.
+### AI-powered workflow to ship ~~faster~~ _better_ using spec-driven development, GitHub issues, Git worktrees, and multiple AI agents running in parallel.
+
+**Compatible with Claude Code and OpenCode** - Use the AI coding assistant you prefer.
 
 **[中文文档 (Chinese Documentation)](zh-docs/README_ZH.md)**
 
@@ -388,20 +391,17 @@ Teams using this system report:
 
 1. **Install this repository into your project**:
 
-   #### Unix/Linux/macOS
-
    ```bash
    cd path/to/your/project/
-   curl -sSL https://automaze.io/ccpm/install | bash
-   # or: wget -qO- https://automaze.io/ccpm/install | bash
+   
+   # For Claude Code users:
+   git clone https://github.com/automazeio/ccpm.git .claude
+   
+   # For OpenCode users:
+   git clone https://github.com/automazeio/ccpm.git .opencode
    ```
-
-   #### Windows (PowerShell)
-   ```bash
-   cd path/to/your/project/
-   iwr -useb https://automaze.io/ccpm/install | iex
-   ```
-   > ⚠️ **IMPORTANT**: If you already have a `.claude` directory, clone this repository to a different directory and copy the contents of the cloned `.claude` directory to your project's `.claude` directory.
+   
+   > **Note:** The repo is called `ccpm` but you clone it to `.claude/` or `.opencode/` depending on your environment. The system auto-detects which environment you're using.
 
    See full/other installation options in the [installation guide ›](https://github.com/automazeio/ccpm/tree/main/install)
 

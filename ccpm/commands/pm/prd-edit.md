@@ -15,7 +15,7 @@ Edit an existing Product Requirements Document.
 
 ### 1. Read Current PRD
 
-Read `.claude/prds/$ARGUMENTS.md`:
+Read `${CCPM_PRDS_DIR}/$ARGUMENTS.md`:
 - Parse frontmatter
 - Read all sections
 

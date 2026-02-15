@@ -340,7 +340,7 @@ find . -name "*.rs" -exec grep -l "#\[cfg(test)\]" {} \; | wc -l
 
 ### 3. Create Test Runner Configuration
 
-Create `.claude/testing-config.md` with discovered information:
+Create `${CCPM_DIR}/testing-config.md` with discovered information:
 
 ```markdown
 ---
@@ -393,7 +393,7 @@ Prepare agent context based on framework:
 - Last Run: Never
 
 ## Execution Rules
-1. Always use the test-runner agent from `.claude/agents/test-runner.md`
+1. Always use the test-runner agent from `${CCPM_AGENTS_DIR}/test-runner.md`
 2. Run with maximum verbosity for debugging
 3. No mock services - use real implementations
 4. Execute tests sequentially - no parallel execution
@@ -488,7 +488,7 @@ After configuration:
 ### 8. Save Configuration
 
 If successful, save configuration for future sessions:
-- Store in `.claude/testing-config.md`
+- Store in `${CCPM_DIR}/testing-config.md`
 - Include all discovered settings
 - Update on subsequent runs if changes detected
 

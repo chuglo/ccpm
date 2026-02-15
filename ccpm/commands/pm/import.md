@@ -49,7 +49,7 @@ For each issue to import:
 
 **If Epic:**
 ```bash
-mkdir -p .claude/epics/{epic_name}
+mkdir -p ${CCPM_EPICS_DIR}/{epic_name}
 # Create epic.md with GitHub content and frontmatter
 ```
 

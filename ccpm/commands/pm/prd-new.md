@@ -14,7 +14,7 @@ Create a Product Requirements Document through structured brainstorming.
 ## Required Rules
 
 **IMPORTANT:** Before executing this command, read and follow:
-- `.claude/rules/datetime.md` - For getting real current date/time
+- `${CCPM_RULES_DIR}/datetime.md` - For getting real current date/time
 
 ## Preflight Checklist
 
@@ -27,12 +27,12 @@ Complete these silently — don't narrate preflight progress to the user.
    - If invalid: "❌ Feature name must be kebab-case. Examples: user-auth, payment-v2"
 
 2. **Check for existing PRD:**
-   - Check if `.claude/prds/$ARGUMENTS.md` already exists
+   - Check if `${CCPM_PRDS_DIR}/$ARGUMENTS.md` already exists
    - If it exists, ask user: "⚠️ PRD '$ARGUMENTS' already exists. Overwrite? (yes/no)"
    - If user says no, suggest: "/pm:prd-parse $ARGUMENTS to create an epic from the existing PRD"
 
 3. **Verify directory structure:**
-   - Create `.claude/prds/` if it doesn't exist
+   - Create `${CCPM_PRDS_DIR}/` if it doesn't exist
 
 ## Role
 
@@ -47,7 +47,7 @@ Do NOT write the PRD file until Phase 2 is complete and the user has approved th
 ### Explore Context
 Before asking questions, silently gather context:
 - Check project files, docs, recent commits for relevant background
-- Look at existing PRDs in `.claude/prds/` for patterns and scope precedent
+- Look at existing PRDs in `${CCPM_PRDS_DIR}/` for patterns and scope precedent
 
 ### Ask Clarifying Questions
 
@@ -91,7 +91,7 @@ If the user wants changes, revise and re-present that section before moving on.
 
 ## Phase 3: Write the PRD
 
-Once all sections are approved, save to `.claude/prds/$ARGUMENTS.md`:
+Once all sections are approved, save to `${CCPM_PRDS_DIR}/$ARGUMENTS.md`:
 
 ```markdown
 ---
@@ -142,7 +142,7 @@ Before saving, verify:
 
 ### Post-Creation
 
-1. Confirm: "✅ PRD created: .claude/prds/$ARGUMENTS.md"
+1. Confirm: "✅ PRD created: ${CCPM_PRDS_DIR}/$ARGUMENTS.md"
 2. Brief summary of what was captured
 3. Suggest: "Ready to create implementation epic? Run: /pm:prd-parse $ARGUMENTS"
 

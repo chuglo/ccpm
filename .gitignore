@@ -1,3 +1,7 @@
 .DS_Store
 .idea/
 CLAUDE.md
+
+# Environment directories (symlinks to ccpm/)
+.claude/
+.opencode/

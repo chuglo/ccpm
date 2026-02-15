@@ -21,7 +21,7 @@ Where `test_target` can be:
 
 ```bash
 # Check if testing is configured
-test -f .claude/testing-config.md || echo "❌ Testing not configured. Run /testing:prime first"
+test -f ${CCPM_DIR}/testing-config.md || echo "❌ Testing not configured. Run /testing:prime first"
 ```
 
 If test target provided, verify it exists:
@@ -41,7 +41,7 @@ Based on testing-config.md and target:
 
 ### 2. Execute Tests
 
-Use the test-runner agent from `.claude/agents/test-runner.md`:
+Use the test-runner agent from `${CCPM_AGENTS_DIR}/test-runner.md`:
 
 ```markdown
 Execute tests for: $ARGUMENTS (or "all" if empty)
