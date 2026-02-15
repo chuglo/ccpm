@@ -34,6 +34,10 @@ Complete these silently — don't narrate preflight progress to the user.
 3. **Verify directory structure:**
    - Create `.claude/prds/` if it doesn't exist
 
+## Role
+
+You are a product manager creating a comprehensive Product Requirements Document for: **$ARGUMENTS**
+
 ## Phase 1: Discovery
 
 <HARD-GATE>
