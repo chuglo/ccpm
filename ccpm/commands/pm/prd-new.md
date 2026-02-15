@@ -4,7 +4,7 @@ allowed-tools: Bash, Read, Write, LS
 
 # PRD New
 
-Launch brainstorming for new product requirement document.
+Create a Product Requirements Document through structured brainstorming.
 
 ## Usage
 ```
@@ -18,131 +18,135 @@ Launch brainstorming for new product requirement document.
 
 ## Preflight Checklist
 
-Before proceeding, complete these validation steps.
-Do not bother the user with preflight checks progress ("I'm not going to ..."). Just do them and move on.
+Complete these silently — don't narrate preflight progress to the user.
 
 ### Input Validation
 1. **Validate feature name format:**
    - Must contain only lowercase letters, numbers, and hyphens
    - Must start with a letter
-   - No spaces or special characters allowed
-   - If invalid, tell user: "❌ Feature name must be kebab-case (lowercase letters, numbers, hyphens only). Examples: user-auth, payment-v2, notification-system"
+   - If invalid: "❌ Feature name must be kebab-case. Examples: user-auth, payment-v2"
 
 2. **Check for existing PRD:**
    - Check if `.claude/prds/$ARGUMENTS.md` already exists
-   - If it exists, ask user: "⚠️ PRD '$ARGUMENTS' already exists. Do you want to overwrite it? (yes/no)"
-   - Only proceed with explicit 'yes' confirmation
-   - If user says no, suggest: "Use a different name or run: /pm:prd-parse $ARGUMENTS to create an epic from the existing PRD"
+   - If it exists, ask user: "⚠️ PRD '$ARGUMENTS' already exists. Overwrite? (yes/no)"
+   - If user says no, suggest: "/pm:prd-parse $ARGUMENTS to create an epic from the existing PRD"
 
 3. **Verify directory structure:**
-   - Check if `.claude/prds/` directory exists
-   - If not, create it first
-   - If unable to create, tell user: "❌ Cannot create PRD directory. Please manually create: .claude/prds/"
+   - Create `.claude/prds/` if it doesn't exist
 
-## Instructions
+## Phase 1: Discovery
 
-You are a product manager creating a comprehensive Product Requirements Document (PRD) for: **$ARGUMENTS**
+<HARD-GATE>
+Do NOT write the PRD file until Phase 2 is complete and the user has approved the design.
+</HARD-GATE>
 
-Follow this structured approach:
+### Explore Context
+Before asking questions, silently gather context:
+- Check project files, docs, recent commits for relevant background
+- Look at existing PRDs in `.claude/prds/` for patterns and scope precedent
 
-### 1. Discovery & Context
-- Ask clarifying questions about the feature/product "$ARGUMENTS"
-- Understand the problem being solved
-- Identify target users and use cases
-- Gather constraints and requirements
+### Ask Clarifying Questions
 
-### 2. PRD Structure
-Create a comprehensive PRD with these sections:
+**One question at a time.** Do not batch questions. Each message should contain exactly one question.
 
-#### Executive Summary
-- Brief overview and value proposition
+**Prefer multiple-choice questions** when possible — they're easier to answer and constrain the design space. Use open-ended questions only when the answer space is too broad for options.
 
-#### Problem Statement
-- What problem are we solving?
-- Why is this important now?
+Focus areas (ask only what's needed, skip what's already clear):
+- **Problem**: What problem does this solve? Who has this problem?
+- **Users**: Who are the primary users? What are their workflows?
+- **Scope**: What's the minimum viable version? What's explicitly out of scope?
+- **Constraints**: Technical limitations, timeline, dependencies on other features?
+- **Success**: How will we know this worked? What metrics matter?
 
-#### User Stories
-- Primary user personas
-- Detailed user journeys
-- Pain points being addressed
+Stop asking questions when you have enough to propose approaches. Don't over-discover — you can refine during approach discussion.
 
-#### Requirements
-**Functional Requirements**
-- Core features and capabilities
-- User interactions and flows
+### Propose Approaches
 
-**Non-Functional Requirements**
-- Performance expectations
-- Security considerations
-- Scalability needs
+Present **2-3 approaches** with trade-offs. For each:
+- Brief description (2-3 sentences)
+- Key trade-off (what you gain vs. what you give up)
 
-#### Success Criteria
-- Measurable outcomes
-- Key metrics and KPIs
+Lead with your recommended approach and explain why.
 
-#### Constraints & Assumptions
-- Technical limitations
-- Timeline constraints
-- Resource limitations
+Ask the user to pick one (or suggest a hybrid).
 
-#### Out of Scope
-- What we're explicitly NOT building
+## Phase 2: Design Validation
 
-#### Dependencies
-- External dependencies
-- Internal team dependencies
+Present the PRD content **section by section** for incremental approval. After each section, ask: "Does this look right, or should I adjust anything?"
 
-### 3. File Format with Frontmatter
-Save the completed PRD to: `.claude/prds/$ARGUMENTS.md` with this exact structure:
+Sections to present (scale each to its complexity — a sentence if obvious, a few paragraphs if nuanced):
+
+1. **Executive Summary** — overview and value proposition
+2. **Problem Statement** — what we're solving and why now
+3. **User Stories** — personas, journeys, acceptance criteria
+4. **Requirements** — functional and non-functional
+5. **Success Criteria** — measurable outcomes and metrics
+6. **Constraints, Out of Scope, Dependencies** — boundaries
+
+If the user wants changes, revise and re-present that section before moving on.
+
+## Phase 3: Write the PRD
+
+Once all sections are approved, save to `.claude/prds/$ARGUMENTS.md`:
 
 ```markdown
 ---
 name: $ARGUMENTS
-description: [Brief one-line description of the PRD]
+description: [Brief one-line description]
 status: backlog
-created: [Current ISO date/time]
+created: [Current ISO date/time from `date -u +"%Y-%m-%dT%H:%M:%SZ"`]
 ---
 
 # PRD: $ARGUMENTS
 
 ## Executive Summary
-[Content...]
+[Approved content]
 
 ## Problem Statement
-[Content...]
+[Approved content]
 
-[Continue with all sections...]
+## User Stories
+[Approved content]
+
+## Requirements
+
+### Functional Requirements
+[Approved content]
+
+### Non-Functional Requirements
+[Approved content]
+
+## Success Criteria
+[Approved content]
+
+## Constraints & Assumptions
+[Approved content]
+
+## Out of Scope
+[Approved content]
+
+## Dependencies
+[Approved content]
 ```
 
-### 4. Frontmatter Guidelines
-- **name**: Use the exact feature name (same as $ARGUMENTS)
-- **description**: Write a concise one-line summary of what this PRD covers
-- **status**: Always start with "backlog" for new PRDs
-- **created**: Get REAL current datetime by running: `date -u +"%Y-%m-%dT%H:%M:%SZ"`
-  - Never use placeholder text
-  - Must be actual system time in ISO 8601 format
-
-### 5. Quality Checks
-
-Before saving the PRD, verify:
-- [ ] All sections are complete (no placeholder text)
+### Quality Checks
+Before saving, verify:
+- [ ] No placeholder text remains
 - [ ] User stories include acceptance criteria
 - [ ] Success criteria are measurable
-- [ ] Dependencies are clearly identified
-- [ ] Out of scope items are explicitly listed
+- [ ] Out of scope is explicit
 
-### 6. Post-Creation
+### Post-Creation
 
-After successfully creating the PRD:
 1. Confirm: "✅ PRD created: .claude/prds/$ARGUMENTS.md"
-2. Show brief summary of what was captured
-3. Suggest next step: "Ready to create implementation epic? Run: /pm:prd-parse $ARGUMENTS"
+2. Brief summary of what was captured
+3. Suggest: "Ready to create implementation epic? Run: /pm:prd-parse $ARGUMENTS"
 
-## Error Recovery
+## Key Principles
 
-If any step fails:
-- Clearly explain what went wrong
-- Provide specific steps to fix the issue
-- Never leave partial or corrupted files
-
-Conduct a thorough brainstorming session before writing the PRD. Ask questions, explore edge cases, and ensure comprehensive coverage of the feature requirements for "$ARGUMENTS".
+- **One question at a time** — don't overwhelm
+- **Multiple choice preferred** — constrain the design space
+- **YAGNI ruthlessly** — cut features that aren't essential for v1
+- **Explore alternatives** — always propose 2-3 approaches
+- **Incremental validation** — section-by-section approval
+- **No implementation** — this command produces a PRD, not code
